@@ -1,0 +1,14 @@
+<div class="
+  bg-gradient-to-r from-violet-500 to-indigo-500 p-8
+  rounded aspect-square justfy-center items-center
+  grid gap-6 grid-cols-<%= @size %> grid-rows-<%= @size %>
+">
+  <% @board_size.times do |value| %>
+    <div class="
+      p-1 shadow-sm hover:shadow-2xl rounded bg-black
+      justify-self-center min-h-full min-w-full
+    ">
+      <%= value %>
+    </div>
+  <% end %>
+</div>
