@@ -2,11 +2,12 @@
 
 class GameBoardComponent < ViewComponent::Base
 
-  SUPPORTED_BOARD_SIZE = [ 3, 4, 5].freeze
+  SUPPORTED_BOARD_SIZE = [ 2, 4 ].freeze
 
   def initialize(size: SUPPORTED_BOARD_SIZE[0])
     @size = size
     @board_size = (size * size)
+    @decoded_object = { "yellow--rock": [ 2, 13 ] }.to_json
   end
 
   def render?
