@@ -1,14 +1,23 @@
-<div class="
-  bg-gradient-to-r from-violet-500 to-indigo-500 p-8
-  rounded aspect-square justfy-center items-center
-  grid gap-6 grid-cols-<%= @size %> grid-rows-<%= @size %>
-">
+<div
+  class="
+    bg-gradient-to-r from-violet-500 to-indigo-500 p-8
+    rounded aspect-square justfy-center items-center
+    grid gap-6 grid-cols-<%= @size %> grid-rows-<%= @size %>
+  "
+  data-controller="color"
+  data-color-board-value="<%= @decoded_object %>"
+>
   <% @board_size.times do |value| %>
-    <div class="
-      p-1 shadow-sm hover:shadow-2xl rounded bg-black
-      justify-self-center min-h-full min-w-full
-    ">
+    <div
+      class="
+        p-1 shadow-sm hover:shadow-2xl rounded bg-black
+        justify-self-center min-h-full min-w-full
+      "
+      data-tile-index="<%= value %>"
+      data-action="click->color#flip"
+    >
       <%= value %>
     </div>
   <% end %>
+  <span data-color-target="test"></span>
 </div>
