@@ -1,22 +1,24 @@
-<div
-  class="
+<%
+  boardClassName ="
     bg-gradient-to-r from-violet-500 to-indigo-500 p-8
-    rounded aspect-square justfy-center items-center
-    grid gap-6 grid-cols-<%= @size %> grid-rows-<%= @size %>
+    rounded aspect-square justify-center items-center
+    grid gap-6 grid-cols-#{@size} grid-rows-#{@size}
   "
-  data-controller="color"
-  data-color-board-value="<%= @decoded_object %>"
->
+  tileClassName = "
+    p-1 shadow-sm hover:shadow-2xl rounded bg-black
+    justify-self-center min-h-full min-w-full
+  "
+%>
+
+<%= content_tag(:div, class: boardClassName, data: {
+  controller: "color icon",
+  board_value: @decoded_object
+}) do %>
   <% @board_size.times do |value| %>
-    <div
-      class="
-        p-1 shadow-sm hover:shadow-2xl rounded bg-black
-        justify-self-center min-h-full min-w-full
-      "
-      data-tile-index="<%= value %>"
-      data-action="click->color#flip"
-    >
-      <%= value %>
-    </div>
+    <%= content_tag(:div, value, class: tileClassName, data: {
+        tile_index_value: value,
+        action: "click->color#flip"
+      }
+    ) %>
   <% end %>
-</div>
+<% end %>
