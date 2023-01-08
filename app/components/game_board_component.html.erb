@@ -10,15 +10,14 @@
   "
 %>
 
-<%= content_tag(:div, class: boardClassName, data: {
-  controller: "color icon",
-  board_value: @decoded_object
-}) do %>
-  <% @board_size.times do |value| %>
-    <%= content_tag(:div, value, class: tileClassName, data: {
-        tile_index_value: value,
-        action: "click->color#flip"
-      }
-    ) %>
+<%= content_tag(:div, data: { controller: "board", board_value: @decoded_object }) do %>
+  <%= content_tag(:div, class: boardClassName) do %>
+    <% @board_size.times do |value| %>
+      <%= content_tag(:div, value, class: tileClassName, data: {
+          tile_index_value: value,
+          action: "click->board#flipTile"
+        }
+      ) %>
+    <% end %>
   <% end %>
 <% end %>
