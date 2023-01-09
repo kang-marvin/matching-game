@@ -10,11 +10,11 @@
   "
 %>
 
-<%= content_tag(:div, data: { controller: "board", board_value: @decoded_object }) do %>
+<%= content_tag(:div, data: { controller: "board", board_finished_result_value: @board_object }) do %>
   <%= content_tag(:div, class: boardClassName) do %>
     <% @board_size.times do |value| %>
       <%= content_tag(:div, value, class: tileClassName, data: {
-          tile_index_value: value,
+          tile_index: value,
           action: "click->board#flipTile"
         }
       ) %>
