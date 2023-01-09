@@ -6,17 +6,11 @@ const timeoutInterval   = 1000
 JOINER = "--"
 DEFAULT_RESULT = { color: "white", label: "N/A" }
 
-// Connects to data-controller="board"
 export default class extends Controller {
 
   static values  = { finishedResult: {type: Object, default: {} } }
 
-  initialize() {
-    console.log("Board controller initialized")
-  }
-
   connect() {
-    console.log("Board controller connected")
     this.boardKeys = Object.keys(this.finishedResultValue)
     this.totalTileClicked = 0
   }
@@ -30,9 +24,6 @@ export default class extends Controller {
     setTimeout(() => {
       this.resetTileContents(tile)
     }, timeoutInterval)
-
-    this.totalTileClicked++
-    // this.testTarget.textContent = this.totalTileClicked
   }
 
   fetchDataForClickedTile(tileIndex) {
