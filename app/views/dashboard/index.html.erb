@@ -4,5 +4,5 @@
   <!-- Game Board Informants -->
   <%= render(GameInformantComponent.new()) %>
   <!-- Game Board -->
-  <%= render(GameBoardComponent.new(size: @game_board_size)) %>
+  <%= render(GameBoardComponent.new(size: @game_board_size, board: @game_board)) %>
 <% end %>

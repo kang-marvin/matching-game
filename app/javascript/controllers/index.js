@@ -4,5 +4,8 @@
 
 import { application } from "./application"
 
+import BoardController from "./board_controller"
+application.register("board", BoardController)
+
 import ColorController from "./color_controller"
 application.register("color", ColorController)
