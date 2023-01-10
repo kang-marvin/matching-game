@@ -2,6 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 
 const DEFAULT_COLOR      = 'bg-black'
 const TIMEOUT_INTERVAL   = 1000
+const DEFAULT_TILE_INDEX = 0
 
 JOINER = "--"
 DEFAULT_RESULT = { color: "white", label: "N/A" }
@@ -12,25 +13,28 @@ export default class extends Controller {
 
   connect() {
     this.boardKeys = Object.keys(this.finishedResultValue)
-    this.totalTileClicked = 0
+    this.previouslyClickedTileIndex = DEFAULT_TILE_INDEX
   }
 
   flipTile(event) {
     const tile = event.target
-    const data =
-      this.fetchDataForClickedTile(tile.dataset.tileIndex)
     const tileIndex = Number(tile.dataset.tileIndex)
+
+    if (tileIndex != this.previouslyClickedTileIndex) {
+      const data =
+        this.fetchDataForClickedTile(tileIndex)
+
+      this.showTileContents(tile, data)
+      setTimeout(() => {
+        this.resetTileContents(tile)
       }, TIMEOUT_INTERVAL)
 
-    this.showTileContents(tile, data)
-    setTimeout(() => {
-      this.resetTileContents(tile)
-    }, timeoutInterval)
+      this.previouslyClickedTileIndex = tileIndex
+    }
   }
 
   fetchDataForClickedTile(tileIndex) {
     const tileKeyInBoard = this.boardKeys.filter(key => {
-      return this.finishedResultValue[key].includes(Number(tileIndex))
       return this.finishedResultValue[key].includes(tileIndex)
     })
 
@@ -43,14 +47,12 @@ export default class extends Controller {
   showTileContents(tile, data) {
     tile.style.backgroundColor = data.color
     tile.textContent = data.label
-    tile.classList.remove(defaultColor)
     tile.classList.remove(DEFAULT_COLOR)
   }
 
   resetTileContents(tile) {
     tile.style.backgroundColor = null
     tile.textContent = null
-    tile.classList.add(defaultColor)
     tile.classList.add(DEFAULT_COLOR)
   }
 
