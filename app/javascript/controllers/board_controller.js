@@ -14,6 +14,7 @@ export default class extends Controller {
   connect() {
     this.boardKeys = Object.keys(this.finishedResultValue)
     this.previouslyClickedTileIndex = DEFAULT_TILE_INDEX
+    this.successiveTilesClicked = []
   }
 
   flipTile(event) {
@@ -21,13 +22,22 @@ export default class extends Controller {
     const tileIndex = Number(tile.dataset.tileIndex)
 
     if (tileIndex != this.previouslyClickedTileIndex) {
+
       const data =
         this.fetchDataForClickedTile(tileIndex)
 
       this.showTileContents(tile, data)
-      setTimeout(() => {
-        this.resetTileContents(tile)
-      }, TIMEOUT_INTERVAL)
+
+      this.successiveTilesClicked = [...this.successiveTilesClicked, tile]
+
+      if (this.successiveTilesClicked.length == 2) {
+        setTimeout(() => {
+          this.successiveTilesClicked.forEach(tile => {
+            this.resetTileContents(tile)
+          });
+        }, TIMEOUT_INTERVAL)
+        this.successiveTilesClicked = []
+      }
 
       this.previouslyClickedTileIndex = tileIndex
     }
