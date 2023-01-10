@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
-const defaultColor      = 'bg-black'
-const timeoutInterval   = 1000
+const DEFAULT_COLOR      = 'bg-black'
+const TIMEOUT_INTERVAL   = 1000
 
 JOINER = "--"
 DEFAULT_RESULT = { color: "white", label: "N/A" }
@@ -19,6 +19,8 @@ export default class extends Controller {
     const tile = event.target
     const data =
       this.fetchDataForClickedTile(tile.dataset.tileIndex)
+    const tileIndex = Number(tile.dataset.tileIndex)
+      }, TIMEOUT_INTERVAL)
 
     this.showTileContents(tile, data)
     setTimeout(() => {
@@ -29,6 +31,7 @@ export default class extends Controller {
   fetchDataForClickedTile(tileIndex) {
     const tileKeyInBoard = this.boardKeys.filter(key => {
       return this.finishedResultValue[key].includes(Number(tileIndex))
+      return this.finishedResultValue[key].includes(tileIndex)
     })
 
     if (tileKeyInBoard.length < 1) { return DEFAULT_RESULT }
@@ -41,12 +44,14 @@ export default class extends Controller {
     tile.style.backgroundColor = data.color
     tile.textContent = data.label
     tile.classList.remove(defaultColor)
+    tile.classList.remove(DEFAULT_COLOR)
   }
 
   resetTileContents(tile) {
     tile.style.backgroundColor = null
     tile.textContent = null
     tile.classList.add(defaultColor)
+    tile.classList.add(DEFAULT_COLOR)
   }
 
 }
