@@ -11,10 +11,13 @@
 %>
 
 <%= content_tag(:div, data: { controller: "board", board_finished_result_value: @board_object }) do %>
+  <%#= content_tag(:span, "", data: { board_target: "completion" }) %>
+  <%#= content_tag(:span, "", data: { board_target: "test" }) %>
   <%= content_tag(:div, class: boardClassName) do %>
     <% @board_size.times do |value| %>
       <%= content_tag(:div, value, class: tileClassName, data: {
           tile_index: value,
+          is_open: "false",
           action: "click->board#flipTile"
         }
       ) %>
