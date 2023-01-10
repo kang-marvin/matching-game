@@ -10,16 +10,14 @@ DEFAULT_RESULT = { color: "white", label: "N/A" }
 
 export default class extends Controller {
 
-  static values  = { finishedResult: {type: Object, default: {} } }
-  // static targets = [ "test", "completion" ]
+  static values  = { finishedResult: {type: Object, default: {} }, boardSize: Number }
+  static targets = [ "completion" ]
 
   connect() {
     this.boardKeys = Object.keys(this.finishedResultValue)
     this.previouslyClickedTileIndexObject = DEFAULT_TILE_INDEX_OBJECT
+    this.solvedTileIndexes      = []
     this.successiveTilesClicked = []
-    this.solvedTileIndexes = []
-
-    this.completionTarget.textContent = this.successiveTilesClicked.length
   }
 
   flipTile(event) {
@@ -40,8 +38,10 @@ export default class extends Controller {
       }
 
       this.updatePreviouslyClickedTileIndexes(tileIndex, data['indexes'])
-      this.completionTarget.textContent = this.successiveTilesClicked.length
+
+      this.showCompletionTextWhenAllTilesHaveBeenSolved()
     }
+
   }
 
   fetchDataForClickedTile(tileIndex) {
@@ -64,6 +64,12 @@ export default class extends Controller {
     tile.style.backgroundColor = data.color
     tile.textContent = data.label
     tile.classList.remove(DEFAULT_COLOR)
+  }
+
+  showCompletionTextWhenAllTilesHaveBeenSolved() {
+    if (this.solvedTileIndexes.length == this.boardSizeValue) {
+      this.completionTarget.textContent = "Board Solved!!! Congratulations"
+    }
   }
 
   previouslyClickedTileIsTheCurrentTile(tileIndex) {
