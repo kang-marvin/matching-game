@@ -1,4 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
+import { DefaultIcon, Icons } from "./data/icons"
 
 const DEFAULT_COLOR       = 'bg-black'
 const TIMEOUT_INTERVAL    = 1000
@@ -61,8 +62,9 @@ export default class extends Controller {
 
   showTileContents(tile, data) {
     tile.dataset.isOpen = 'true'
+    tile.src = Icons[data.label.toLowerCase()] || DefaultIcon
     tile.style.backgroundColor = data.color
-    tile.textContent = data.label
+    tile.alt = data.label.toUpperCase()
     tile.classList.remove(DEFAULT_COLOR)
   }
 
@@ -111,7 +113,8 @@ export default class extends Controller {
   resetTileContents(tile) {
     tile.dataset.isOpen = 'false'
     tile.style.backgroundColor = null
-    tile.textContent = null
+    tile.src = DefaultIcon
+    tile.alt = 'No Image'
     tile.classList.add(DEFAULT_COLOR)
   }
 
