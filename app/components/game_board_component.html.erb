@@ -5,8 +5,8 @@
     grid gap-6 grid-cols-#{@size} grid-rows-#{@size}
   "
   tileClassName = "
-    p-1 shadow-sm hover:shadow-2xl rounded bg-black
-    justify-self-center min-h-full min-w-full w-24
+    shadow-sm hover:shadow-2xl rounded bg-black
+    justify-self-center w-24 aspect-square
   "
 %>
 
@@ -20,12 +20,19 @@
     <%#= content_tag(:span, "", data: { board_target: "test" }) %>
     <%= content_tag(:div, class: boardClassName) do %>
       <% @board_size.times do |value| %>
-        <%= content_tag(:div, value, class: tileClassName, data: {
-            tile_index: value,
-            is_open: "false",
+        <%= content_tag(:div, class: tileClassName, data: {
             action: "click->board#flipTile"
           }
-        ) %>
+        ) do %>
+          <div
+            class="p-6 shadow-lg rounded align-middle h-full justify-center items-center text-center flex"
+            data-is-open="false"
+            data-tile-index="<%= value %>"
+          >
+            value
+          </div>
+
+        <% end %>
       <% end %>
     <% end %>
 <% end %>
