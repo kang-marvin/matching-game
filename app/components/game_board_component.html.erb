@@ -12,12 +12,12 @@
 
 <%= content_tag(:div, data: {
       controller: "board",
+      board_message_outlet: "div#message_feed",
       board_finished_result_value: @board_object,
       board_board_size_value: @board_size
     }
   ) do %>
     <%= content_tag(:span, "", data: { board_target: "completion" }) %>
-    <%#= content_tag(:span, "", data: { board_target: "test" }) %>
     <%= content_tag(:div, class: boardClassName) do %>
       <% @board_size.times do |value| %>
         <%= content_tag(:div, class: tileClassName, data: {

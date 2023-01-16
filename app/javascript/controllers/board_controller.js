@@ -2,7 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 import { DefaultIcon, Icons } from "./data/icons"
 
 const DEFAULT_COLOR       = 'bg-black'
-const TIMEOUT_INTERVAL    = 1000
+const TIMEOUT_INTERVAL    = 1500
 const MATCHING_TILES_SIZE = 2
 const DEFAULT_TILE_INDEX_OBJECT =  { mainIndex: null, matchingIndex: null }
 
@@ -11,8 +11,13 @@ DEFAULT_RESULT = { color: "white", label: "N/A" }
 
 export default class extends Controller {
 
-  static values  = { finishedResult: {type: Object, default: {} }, boardSize: Number }
+  static values  = {
+    finishedResult: {type: Object, default: {} },
+    boardSize: Number,
+    movesCount: {type: Number, default: 0}
+  }
   static targets = [ "completion" ]
+  static outlets = [ "message" ]
 
   connect() {
     this.boardKeys = Object.keys(this.finishedResultValue)
@@ -36,6 +41,8 @@ export default class extends Controller {
         this.previouslyClickedTileContentsMatchesTheCurrentTile(tileIndex) ?
           this.updateSolvedTilesCollection() :
           this.resetSuccessiveClickedTilesContents()
+
+        this.movesCountValue++
       }
 
       this.updatePreviouslyClickedTileIndexes(tileIndex, data['indexes'])
@@ -116,6 +123,10 @@ export default class extends Controller {
     tile.src = DefaultIcon
     tile.alt = 'No Image'
     tile.classList.add(DEFAULT_COLOR)
+  }
+
+  movesCountValueChanged() {
+    this.messageOutlet.updateMovesCounter(this.movesCountValue)
   }
 
 }

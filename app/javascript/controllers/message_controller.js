@@ -1,0 +1,12 @@
+import { Controller } from "@hotwired/stimulus"
+
+// Connects to data-controller="message"
+export default class extends Controller {
+  static targets = [ "movesCounter" ]
+
+  connect() {}
+
+  updateMovesCounter(count) {
+    this.movesCounterTarget.textContent = `${count} moves`
+  }
+}
