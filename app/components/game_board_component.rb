@@ -2,17 +2,17 @@
 
 class GameBoardComponent < ViewComponent::Base
 
-  SUPPORTED_BOARD_SIZE = [ 2, 4, 6 ].freeze
   JOINER = "--"
 
-  def initialize(size: SUPPORTED_BOARD_SIZE[0], board: [])
+  def initialize(size: 0, board: [], levels: [])
+    @levels = levels
     @size = size
     @board_size = (size * size)
     @board_object = hashfied_board(board).to_json
   end
 
   def render?
-    SUPPORTED_BOARD_SIZE.include?(@size)
+    @levels.include?(@size)
   end
 
   private

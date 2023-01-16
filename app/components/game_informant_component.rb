@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
 class GameInformantComponent < ViewComponent::Base
-  GAME_DIFFICULTY_LEVELS = [ 'Easy', 'Standard', 'Hard' ]
+  DEFAULT_LEVEL = 'standard'
 
-  def initialize()
-    @game_levels = GAME_DIFFICULTY_LEVELS
-    @default_game_level = 'Hard'
+  def initialize(levels: [], selected_level: DEFAULT_LEVEL)
+    @available_levels = levels
+    @default_level = DEFAULT_LEVEL
+    @selected_level = selected_level || DEFAULT_LEVEL
   end
 end
