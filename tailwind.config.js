@@ -6,11 +6,9 @@ module.exports = {
     './app/assets/stylesheets/**/*.css',
     './app/javascript/**/*.js'
   ],
-  purge: {
-    safelist: [
-      'grid-cols-2', 'grid-rows-2',
-      'grid-cols-4', 'grid-rows-4',
-      'grid-cols-6', 'grid-rows-6',
-    ],
-  },
+  safelist: [
+    'grid-cols-2', 'grid-rows-2',
+    'grid-cols-4', 'grid-rows-4',
+    'grid-cols-6', 'grid-rows-6',
+  ],
 }
