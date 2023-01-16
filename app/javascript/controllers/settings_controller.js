@@ -11,10 +11,6 @@ export default class extends Controller {
     this.setDefaultLevelParams()
   }
 
-  connect() {
-    console.log('Settings controller setup')
-  }
-
   setDifficultyLevel() {
     const level = this.difficultyLevelTarget.value
     let params = this.searchParams
