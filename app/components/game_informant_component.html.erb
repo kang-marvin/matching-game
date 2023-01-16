@@ -17,5 +17,9 @@
 
   <div>Timer</div>
   <div>Game Counter</div>
-  <div>Reset Board</div>
+
+  <!-- Reset Board -->
+  <%= button_tag(type: 'button', data: { action: 'click->settings#resetBoard' }) do %>
+    <p>Reset Board</p>
+  <% end %>
 </section>

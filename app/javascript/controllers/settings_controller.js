@@ -27,6 +27,10 @@ export default class extends Controller {
     }
   }
 
+  resetBoard() {
+    this.setURLWithRefresh(this.searchParams)
+  }
+
   setURLWithoutRefresh(params) {
     window.history.replaceState(null, null, `?${params.toString()}`)
   }
