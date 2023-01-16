@@ -3,8 +3,11 @@ class DashboardController < ApplicationController
   COLORS = ['red', 'purple', 'amber', 'blue', 'gold', 'orange', 'aqua', 'blue', 'pink' ]
   LETTERS = [ "Ant", "Bird", "Cat", "Dog", "Frog", "Horse", "Monkey", "Sea-horse", "Spider" ]
 
+  LEVELS = { 'easy': 2, 'standard': 4, 'hard': 6 }.freeze
+
   def index
-    @game_board_size = 4
+    @game_levels = LEVELS
+    @game_board_size = LEVELS[dashboard_params[:level]&.to_sym] || 4
     @game_board = board_generator(@game_board_size)
   end
 
@@ -19,6 +22,10 @@ class DashboardController < ApplicationController
       options.shuffle.each_slice((board_size * board_size) / 2).to_a.sample
 
     (uniq_options * 2).shuffle
+  end
+
+  def dashboard_params
+    params.permit(:level)
   end
 
 end

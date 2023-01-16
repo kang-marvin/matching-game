@@ -2,7 +2,20 @@
   <!-- Game Header -->
   <%= render(UI::HeaderComponent.new(name: nil)) %>
   <!-- Game Board Informants -->
-  <%= render(GameInformantComponent.new()) %>
+  <%= render(
+        GameInformantComponent.new(
+          levels: @game_levels.keys,
+          selected_level: @game_levels.key(@game_board_size)
+        )
+      )
+  %>
   <!-- Game Board -->
-  <%= render(GameBoardComponent.new(size: @game_board_size, board: @game_board)) %>
+  <%= render(
+        GameBoardComponent.new(
+          size: @game_board_size,
+          board: @game_board,
+          levels: @game_levels.values
+        )
+      )
+  %>
 <% end %>
