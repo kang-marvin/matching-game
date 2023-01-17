@@ -16,8 +16,8 @@ application.register("message", MessageController)
 import MovesController from "./moves_controller"
 application.register("moves", MovesController)
 
-import SettingsController from "./settings_controller"
-application.register("settings", SettingsController)
+import FilterController from "./filter_controller"
+application.register("filter", FilterController)
 
 import TimerController from "./timer_controller"
 application.register("timer", TimerController)

@@ -1,19 +1,24 @@
-<section
-  class="grid grid-rows-1 grid-cols-4 overflow-visible text-center"
-  data-controller="settings",
-  data-settings-default-level-value="<%= @default_level %>"
->
-  <!-- Level  Selection -->
-  <%= select_tag  'game_difficult_level',
-                  options_for_select(@available_levels, @selected_level),
-                  class: 'capitalize',
-                  id: '',
-                  multiple: false,
-                  data: {
-                    settings_target: 'difficultyLevel',
-                    action: 'change->settings#setDifficultyLevel'
-                  }
-                  %>
+<%
+  sectionClassName = "grid grid-rows-1 grid-cols-4 overflow-visible text-center"
+%>
+
+<%= content_tag(:section, class: sectionClassName, data: {
+                        controller: 'filter',
+                        default_board_level_value: @default_level
+                      }
+) do %>
+
+  <!-- Game Level -->
+  <%= select_tag 'game_difficult_level',
+        options_for_select(@available_levels, @selected_level),
+        class: 'capitalize',
+        multiple: false,
+        data: {
+          filter_target: 'boardLevel',
+          action: 'change->filter#setBoardLevel'
+        }
+  %>
+
 
   <!-- Game Duration -->
   <div id="timer--elements" data-controller="timer">
@@ -26,10 +31,11 @@
   </div>
 
   <!-- Reset Board -->
-  <%= button_tag(type: 'button', data: { action: 'click->settings#resetBoard' }) do %>
+  <%= button_tag(type: 'button', data: { action: 'click->filter#refresh' }) do %>
     <i class="fas fa-redo"></i>
   <% end %>
-</section>
+
+<% end%>
 
 <div class="text-center" id="alert--elements" data-controller="alert">
   <p data-alert-target="success"></p>
