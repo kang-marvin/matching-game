@@ -15,12 +15,15 @@
                   }
                   %>
 
-  <div>Timer</div>
+    <!-- Game Duration -->
+    <div id="message-feed" data-controller="message">
+      <div data-message-target="timeCounter">00:00</div>
+    </div>
 
-  <!-- Game Moves -->
-  <%= content_tag(:div, id: 'message_feed', data: { controller: 'message' }) do %>
-    <div data-message-target="movesCounter">0 moves</div>
-  <% end %>
+    <!-- Game Moves -->
+    <div id="message-feed" data-controller="message">
+      <div data-message-target="movesCounter">0 moves</div>
+    </div>
 
   <!-- Reset Board -->
   <%= button_tag(type: 'button', data: { action: 'click->settings#resetBoard' }) do %>

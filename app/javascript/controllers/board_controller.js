@@ -24,6 +24,8 @@ export default class extends Controller {
     this.previouslyClickedTileIndexObject = DEFAULT_TILE_INDEX_OBJECT
     this.solvedTileIndexes      = []
     this.successiveTilesClicked = []
+
+    this.messageOutlet.startTimerCounter()
   }
 
   flipTile(event) {
@@ -77,6 +79,7 @@ export default class extends Controller {
 
   showCompletionTextWhenAllTilesHaveBeenSolved() {
     if (this.solvedTileIndexes.length == this.boardSizeValue) {
+      this.messageOutlet.stopTimerCounter()
       this.completionTarget.textContent = "Board Solved!!! Congratulations"
     }
   }
