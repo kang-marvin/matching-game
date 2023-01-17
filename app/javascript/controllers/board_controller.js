@@ -17,7 +17,7 @@ export default class extends Controller {
     movesCount: {type: Number, default: 0}
   }
   static targets = [ "completion" ]
-  static outlets = [ "message" ]
+  static outlets = [ "count" ]
 
   connect() {
     this.boardKeys = Object.keys(this.finishedResultValue)
@@ -25,32 +25,33 @@ export default class extends Controller {
     this.solvedTileIndexes      = []
     this.successiveTilesClicked = []
 
-    this.messageOutlet.startTimerCounter()
+    this.countOutlet.startTimeCounter()
   }
 
   flipTile(event) {
-    const tile = event.target
-    const tileIndex = Number(tile.dataset.tileIndex)
-    const tileIsOpen = tile.dataset.isOpen == 'true'
+    this.movesCountValue++
+    // const tile = event.target
+    // const tileIndex = Number(tile.dataset.tileIndex)
+    // const tileIsOpen = tile.dataset.isOpen == 'true'
 
-    if (this.previouslyClickedTileIsTheCurrentTile(tileIndex) == false || tileIsOpen == false) {
-      const data = this.fetchDataForClickedTile(tileIndex)
+    // if (this.previouslyClickedTileIsTheCurrentTile(tileIndex) == false || tileIsOpen == false) {
+    //   const data = this.fetchDataForClickedTile(tileIndex)
 
-      this.showTileContents(tile, data)
-      this.successiveTilesClicked.push(tile)
+    //   this.showTileContents(tile, data)
+    //   this.successiveTilesClicked.push(tile)
 
-      if (this.successiveTilesClicked.length == MATCHING_TILES_SIZE) {
-        this.previouslyClickedTileContentsMatchesTheCurrentTile(tileIndex) ?
-          this.updateSolvedTilesCollection() :
-          this.resetSuccessiveClickedTilesContents()
+    //   if (this.successiveTilesClicked.length == MATCHING_TILES_SIZE) {
+    //     this.previouslyClickedTileContentsMatchesTheCurrentTile(tileIndex) ?
+    //       this.updateSolvedTilesCollection() :
+    //       this.resetSuccessiveClickedTilesContents()
 
-        this.movesCountValue++
-      }
+    //     this.movesCountValue++
+    //   }
 
-      this.updatePreviouslyClickedTileIndexes(tileIndex, data['indexes'])
+    //   this.updatePreviouslyClickedTileIndexes(tileIndex, data['indexes'])
 
-      this.showCompletionTextWhenAllTilesHaveBeenSolved()
-    }
+    //   this.showCompletionTextWhenAllTilesHaveBeenSolved()
+    // }
 
   }
 
@@ -79,7 +80,7 @@ export default class extends Controller {
 
   showCompletionTextWhenAllTilesHaveBeenSolved() {
     if (this.solvedTileIndexes.length == this.boardSizeValue) {
-      this.messageOutlet.stopTimerCounter()
+      this.countOutlet.stopTimeCounter()
       this.completionTarget.textContent = "Board Solved!!! Congratulations"
     }
   }
@@ -129,7 +130,7 @@ export default class extends Controller {
   }
 
   movesCountValueChanged() {
-    this.messageOutlet.updateMovesCounter(this.movesCountValue)
+    this.countOutlet.updateMovesCounter(this.movesCountValue)
   }
 
 }
