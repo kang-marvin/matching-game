@@ -7,11 +7,14 @@ import { application } from "./application"
 import BoardController from "./board_controller"
 application.register("board", BoardController)
 
-import TimerController from "./timer_controller"
-application.register("timer", TimerController)
-
 import MessageController from "./message_controller"
 application.register("message", MessageController)
 
+import MovesController from "./moves_controller"
+application.register("moves", MovesController)
+
 import SettingsController from "./settings_controller"
 application.register("settings", SettingsController)
+
+import TimerController from "./timer_controller"
+application.register("timer", TimerController)

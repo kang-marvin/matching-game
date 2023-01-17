@@ -14,10 +14,10 @@ export default class extends Controller {
   static values  = {
     finishedResult: {type: Object, default: {} },
     boardSize: Number,
-    movesCount: {type: Number, default: 0}
   }
+
   static targets = [ "completion" ]
-  static outlets = [ "timer" ]
+  static outlets = [ "timer", "moves" ]
 
   connect() {
     this.boardKeys = Object.keys(this.finishedResultValue)
@@ -29,29 +29,28 @@ export default class extends Controller {
   }
 
   flipTile(event) {
-    this.movesCountValue++
-    // const tile = event.target
-    // const tileIndex = Number(tile.dataset.tileIndex)
-    // const tileIsOpen = tile.dataset.isOpen == 'true'
+    const tile = event.target
+    const tileIndex = Number(tile.dataset.tileIndex)
+    const tileIsOpen = tile.dataset.isOpen == 'true'
 
-    // if (this.previouslyClickedTileIsTheCurrentTile(tileIndex) == false || tileIsOpen == false) {
-    //   const data = this.fetchDataForClickedTile(tileIndex)
+    if (this.previouslyClickedTileIsTheCurrentTile(tileIndex) == false || tileIsOpen == false) {
+      const data = this.fetchDataForClickedTile(tileIndex)
 
-    //   this.showTileContents(tile, data)
-    //   this.successiveTilesClicked.push(tile)
+      this.showTileContents(tile, data)
+      this.successiveTilesClicked.push(tile)
 
-    //   if (this.successiveTilesClicked.length == MATCHING_TILES_SIZE) {
-    //     this.previouslyClickedTileContentsMatchesTheCurrentTile(tileIndex) ?
-    //       this.updateSolvedTilesCollection() :
-    //       this.resetSuccessiveClickedTilesContents()
+      if (this.successiveTilesClicked.length == MATCHING_TILES_SIZE) {
+        this.previouslyClickedTileContentsMatchesTheCurrentTile(tileIndex) ?
+          this.updateSolvedTilesCollection() :
+          this.resetSuccessiveClickedTilesContents()
 
-    //     this.movesCountValue++
-    //   }
+        this.movesOutlet.increaseCount()
+      }
 
-    //   this.updatePreviouslyClickedTileIndexes(tileIndex, data['indexes'])
+      this.updatePreviouslyClickedTileIndexes(tileIndex, data['indexes'])
 
-    //   this.showCompletionTextWhenAllTilesHaveBeenSolved()
-    // }
+      this.showCompletionTextWhenAllTilesHaveBeenSolved()
+    }
 
   }
 
@@ -128,9 +127,4 @@ export default class extends Controller {
     tile.alt = 'No Image'
     tile.classList.add(DEFAULT_COLOR)
   }
-
-  movesCountValueChanged() {
-    this.countOutlet.updateMovesCounter(this.movesCountValue)
-  }
-
 }

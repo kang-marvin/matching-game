@@ -17,13 +17,13 @@
 
   <!-- Game Duration -->
   <div id="timer--elements" data-controller="timer">
-    <div data-count-target="display">00:00</div>
+    <div data-timer-target="display">00:00</div>
   </div>
 
   <!-- Game Moves -->
-  <!-- <div id="_count--elements" data-controller="count">
-    <div data-count-target="moveCounter">0 moves</div>
-  </div> -->
+  <div id="moves--elements" data-controller="moves">
+    <div data-moves-target="display">0 moves</div>
+  </div>
 
   <!-- Reset Board -->
   <%= button_tag(type: 'button', data: { action: 'click->settings#resetBoard' }) do %>
