@@ -16,8 +16,7 @@ export default class extends Controller {
     boardSize: Number,
   }
 
-  static targets = [ "completion" ]
-  static outlets = [ "timer", "moves" ]
+  static outlets = [ "timer", "moves", "alert" ]
 
   connect() {
     this.boardKeys = Object.keys(this.finishedResultValue)
@@ -80,7 +79,7 @@ export default class extends Controller {
   showCompletionTextWhenAllTilesHaveBeenSolved() {
     if (this.solvedTileIndexes.length == this.boardSizeValue) {
       this.timerOutlet.stop()
-      this.completionTarget.textContent = "Board Solved!!! Congratulations"
+      this.alertOutlet.boardCompleted()
     }
   }
 

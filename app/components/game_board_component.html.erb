@@ -14,11 +14,11 @@
       controller: "board",
       board_timer_outlet: "div#timer--elements",
       board_moves_outlet: "div#moves--elements",
+      board_alert_outlet: "div#alert--elements",
       board_finished_result_value: @board_object,
       board_board_size_value: @board_size
     }
   ) do %>
-    <%= content_tag(:span, "", data: { board_target: "completion" }) %>
     <%= content_tag(:div, class: boardClassName) do %>
       <% @board_size.times do |value| %>
         <%= content_tag(:div, class: tileClassName, data: {
