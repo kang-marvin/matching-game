@@ -2,7 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 
 // Connects to data-controller="count"
 export default class extends Controller {
-  static targets = [ "moveCounter", "timeCounter" ]
+  static targets = [ "display" ]
 
   static values = {
     elapsedDuration: { type: Number, default: 0 }
@@ -13,26 +13,19 @@ export default class extends Controller {
   }
 
   /** Public Methods */
-  startTimeCounter() {
+  start() {
     this.elapsedInterval = setInterval(() => {
       this.elapsedDurationValue++
     },1000)
   }
 
-  stopTimeCounter() {
+  stop() {
     clearInterval(this.elapsedInterval)
   }
 
-  updateMovesCounter(movesCount) {
-    this.moveCounterTarget.textContent =
-      `${movesCount} move`
-    // if(this.hasMoveCounterTarget) {
-    // }
-  }
-
   elapsedDurationValueChanged() {
-    if(this.hasTimeCounterTarget) {
-      this.timeCounterTarget.textContent =
+    if(this.hasDisplayTarget) {
+      this.displayTarget.textContent =
         this.#calculateElapsedTime(this.elapsedDurationValue)
     }
   }

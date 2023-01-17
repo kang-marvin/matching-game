@@ -15,15 +15,15 @@
                   }
                   %>
 
-    <!-- Game Duration -->
-    <div id="count--elements" class="timeCounter" data-controller="count">
-      <div data-count-target="timeCounter">00:00</div>
-    </div>
+  <!-- Game Duration -->
+  <div id="timer--elements" data-controller="timer">
+    <div data-count-target="display">00:00</div>
+  </div>
 
-    <!-- Game Moves -->
-    <div id="count--elements" class="moveCounter" data-controller="count">
-      <div data-count-target="moveCounter">0 moves</div>
-    </div>
+  <!-- Game Moves -->
+  <!-- <div id="_count--elements" data-controller="count">
+    <div data-count-target="moveCounter">0 moves</div>
+  </div> -->
 
   <!-- Reset Board -->
   <%= button_tag(type: 'button', data: { action: 'click->settings#resetBoard' }) do %>

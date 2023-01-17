@@ -17,7 +17,7 @@ export default class extends Controller {
     movesCount: {type: Number, default: 0}
   }
   static targets = [ "completion" ]
-  static outlets = [ "count" ]
+  static outlets = [ "timer" ]
 
   connect() {
     this.boardKeys = Object.keys(this.finishedResultValue)
@@ -25,7 +25,7 @@ export default class extends Controller {
     this.solvedTileIndexes      = []
     this.successiveTilesClicked = []
 
-    this.countOutlet.startTimeCounter()
+    this.timerOutlet.start()
   }
 
   flipTile(event) {
@@ -80,7 +80,7 @@ export default class extends Controller {
 
   showCompletionTextWhenAllTilesHaveBeenSolved() {
     if (this.solvedTileIndexes.length == this.boardSizeValue) {
-      this.countOutlet.stopTimeCounter()
+      this.timerOutlet.stop()
       this.completionTarget.textContent = "Board Solved!!! Congratulations"
     }
   }

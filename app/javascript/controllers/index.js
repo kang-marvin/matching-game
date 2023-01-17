@@ -7,8 +7,8 @@ import { application } from "./application"
 import BoardController from "./board_controller"
 application.register("board", BoardController)
 
-import CountController from "./count_controller"
-application.register("count", CountController)
+import TimerController from "./timer_controller"
+application.register("timer", TimerController)
 
 import MessageController from "./message_controller"
 application.register("message", MessageController)
