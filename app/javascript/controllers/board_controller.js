@@ -1,5 +1,6 @@
 import { Controller } from "@hotwired/stimulus"
 import { DefaultIcon, Icons } from "./data/icons"
+import { resetTileContent } from "./helper/tile"
 
 const DEFAULT_COLOR       = 'bg-black'
 const TIMEOUT_INTERVAL    = 1500
@@ -113,17 +114,10 @@ export default class extends Controller {
   resetSuccessiveClickedTilesContents() {
     setTimeout(() => {
       this.successiveTilesClicked.forEach(tile => {
-        this.resetTileContents(tile)
+        resetTileContent(tile)
       });
       this.resetSuccessiveTileArray()
     }, TIMEOUT_INTERVAL)
   }
 
-  resetTileContents(tile) {
-    tile.dataset.isOpen = 'false'
-    tile.style.backgroundColor = null
-    tile.src = DefaultIcon
-    tile.alt = 'No Image'
-    tile.classList.add(DEFAULT_COLOR)
-  }
 }
