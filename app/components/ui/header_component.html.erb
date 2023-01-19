@@ -1,3 +1,13 @@
-<header class="w-fit text-4xl font-thin justify-self-center">
-  <%= @name %>
+<header class="">
+  <center>
+    <h3 class="leading-normal w-fit justify-self-center font-normal text-4xl"><%= @name %></h3>
+    <details class="max-w-sm">
+      <summary class="capitalize">How to play</summary>
+      <div class="text-white px-3 py-1 border-0 rounded relative mb-2 bg-neutral-500">
+        <span class="inline-block align-middle">
+          Click tiles with matching color and image in successive clicks. Good luck
+        </span>
+      </div>
+    </details>
+  </center>
 </header>
