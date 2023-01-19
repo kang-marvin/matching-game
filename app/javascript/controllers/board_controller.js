@@ -1,8 +1,6 @@
 import { Controller } from "@hotwired/stimulus"
-import { DefaultIcon, Icons } from "./data/icons"
 import { resetTileContent, showTileContent } from "./helper/tile"
 
-const DEFAULT_COLOR       = 'bg-black'
 const TIMEOUT_INTERVAL    = 1500
 const MATCHING_TILES_SIZE = 2
 const DEFAULT_TILE_INDEX_OBJECT =  { mainIndex: null, matchingIndex: null }
