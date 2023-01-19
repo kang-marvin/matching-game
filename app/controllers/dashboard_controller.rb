@@ -3,7 +3,7 @@ class DashboardController < ApplicationController
   COLORS = ['red', 'purple', 'lime', 'blue', 'gold', 'orange', 'aqua', 'blue', 'pink' ]
   LETTERS = [ "Ant", "Bird", "Cat", "Dog", "Frog", "Horse", "Monkey", "Sea-horse", "Spider" ]
 
-  LEVELS = { 'easy': 2, 'standard': 4, 'hard': 6 }.freeze
+  LEVELS = I18n.t('game.data.levels')
 
   def index
     @game_levels = LEVELS

@@ -29,16 +29,16 @@
 # To learn more, please read the Rails Internationalization guide
 # available at https://guides.rubyonrails.org/i18n.html.
 
-en:
+es:
   information:
     tutorial:
-      topic: "How to play"
-      instruction: "Click tiles with matching color and image in successive clicks. Good luck"
+      topic: "Cómo jugar"
+      instruction: "Haga clic en mosaicos con color e imagen coincidentes en clics sucesivos.Buena suerte"
 
   game:
     data:
-      default_level: "standard"
-      levels: { 'easy': 2, 'standard': 4, 'hard': 6 }
+      default_level: "de serie"
+      levels: { 'facilisimo': 2, 'de serie': 4, 'duro': 6 }
 
     board:
-      name: "Matching Game"
+      name: "Juego de emparejamiento"

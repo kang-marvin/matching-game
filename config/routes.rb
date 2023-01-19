@@ -3,7 +3,10 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
 
-  root to: redirect(path: '/game')
-  get '/game', to: "dashboard#index"
+  root to: redirect(path: "/en/game")
+
+  scope "(:locale)", locale: /en|es/ do
+    get '/game', to: "dashboard#index"
+  end
 
 end

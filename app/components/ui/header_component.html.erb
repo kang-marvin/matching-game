@@ -2,10 +2,12 @@
   <center>
     <h3 class="leading-normal w-fit justify-self-center font-normal text-4xl"><%= @name %></h3>
     <details class="max-w-sm">
-      <summary class="capitalize">How to play</summary>
+      <summary class="capitalize">
+        <%= I18n.t('information.tutorial.topic') %>
+      </summary>
       <div class="text-white px-3 py-1 border-0 rounded relative mb-2 bg-neutral-500">
         <span class="inline-block align-middle">
-          Click tiles with matching color and image in successive clicks. Good luck
+          <%= I18n.t('information.tutorial.instruction') %>
         </span>
       </div>
     </details>

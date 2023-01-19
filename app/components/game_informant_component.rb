@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class GameInformantComponent < ViewComponent::Base
-  DEFAULT_LEVEL = 'standard'
+  DEFAULT_LEVEL = I18n.t('game.data.default_level')
 
   def initialize(levels: [], selected_level: DEFAULT_LEVEL)
     @available_levels = levels
