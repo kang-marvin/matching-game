@@ -1,12 +1,13 @@
 import { Controller } from "@hotwired/stimulus"
-import { resetTileContent, showTileContent } from "./helper/tile"
+import {
+  extractTileContentsFromFinishedResult,
+  resetTileContent,
+  showTileContent
+} from "./helper/tile"
 
 const TIMEOUT_INTERVAL    = 1500
 const MATCHING_TILES_SIZE = 2
 const DEFAULT_TILE_INDEX_OBJECT =  { mainIndex: null, matchingIndex: null }
-
-JOINER = "--"
-DEFAULT_RESULT = { color: "white", label: "N/A" }
 
 export default class extends Controller {
 
@@ -18,7 +19,6 @@ export default class extends Controller {
   static outlets = [ "timer", "moves", "alert" ]
 
   connect() {
-    this.boardKeys = Object.keys(this.finishedResultValue)
     this.previouslyClickedTileIndexObject = DEFAULT_TILE_INDEX_OBJECT
     this.solvedTileIndexes      = []
     this.successiveTilesClicked = []
@@ -35,39 +35,26 @@ export default class extends Controller {
         this.#previouslyClickedTileIsTheCurrentTile(tileIndex) == false ||
         tileIsOpen == false
       ) {
-      const data = this.#fetchDataForClickedTile(tileIndex)
-
-      showTileContent(tile, data)
+      const tileContent =
+        extractTileContentsFromFinishedResult(
+          tileIndex,
+          this.finishedResultValue
+        )
+      showTileContent(tile, tileContent)
       this.successiveTilesClicked.push(tile)
 
       if (this.successiveTilesClicked.length == MATCHING_TILES_SIZE) {
+        this.movesOutlet.increaseCount()
         this.#previouslyClickedTileContentsMatchesTheCurrentTileContents(tileIndex) ?
           this.#updateSolvedTilesCollection() :
           this.#resetSuccessiveClickedTilesContents()
-
-        this.movesOutlet.increaseCount()
       }
 
-      this.#updatePreviouslyClickedTileIndexes(tileIndex, data['indexes'])
+      this.#updatePreviouslyClickedTileIndexes(tileIndex, tileContent['indexes'])
 
       this.#showCompletionInformationIfBoardIsCompleted()
     }
 
-  }
-
-  #fetchDataForClickedTile(tileIndex) {
-    const tileKeyInBoard = this.boardKeys.filter(key => {
-      return this.finishedResultValue[key].includes(tileIndex)
-    })
-
-    if (tileKeyInBoard.length < 1) { return DEFAULT_RESULT }
-    const result = tileKeyInBoard[0].split(JOINER)
-
-    return {
-      color: result[0],
-      label: result[1],
-      indexes: this.finishedResultValue[tileKeyInBoard[0]]
-    }
   }
 
   #showCompletionInformationIfBoardIsCompleted() {
@@ -90,7 +77,7 @@ export default class extends Controller {
       ...this.solvedTileIndexes,
       ...Object.values(this.previouslyClickedTileIndexObject)
     ]
-    this.resetSuccessiveTileArray()
+    this.#resetSuccessiveTileArray()
   }
 
   #updatePreviouslyClickedTileIndexes(tileIndex, indexes) {
