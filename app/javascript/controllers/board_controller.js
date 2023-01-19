@@ -7,7 +7,6 @@ import {
 
 const TIMEOUT_INTERVAL    = 1500
 const MATCHING_TILES_SIZE = 2
-const DEFAULT_TILE_INDEX_OBJECT =  { mainIndex: null, matchingIndex: null }
 
 export default class extends Controller {
 
@@ -16,10 +15,9 @@ export default class extends Controller {
     boardSize: Number,
   }
 
-  static outlets = [ "timer", "moves", "alert" ]
+  static outlets = [ "timer", "moves", "alert", "store" ]
 
   connect() {
-    this.previouslyClickedTileIndexObject = DEFAULT_TILE_INDEX_OBJECT
     this.solvedTileIndexes      = []
     this.successiveTilesClicked = []
 
@@ -30,27 +28,36 @@ export default class extends Controller {
     const tile = event.target
     const tileIndex = Number(tile.dataset.tileIndex)
     const tileIsOpen = tile.dataset.isOpen == 'true'
+    const previousTile = this.storeOutlet.tile
 
     if (
-        this.#previouslyClickedTileIsTheCurrentTile(tileIndex) == false ||
+        previousTile.mainIndex !== tileIndex ||
         tileIsOpen == false
       ) {
-      const tileContent =
+
+      this.successiveTilesClicked.push(tile)
+      const currentTileContent =
         extractTileContentsFromFinishedResult(
           tileIndex,
           this.finishedResultValue
         )
-      showTileContent(tile, tileContent)
-      this.successiveTilesClicked.push(tile)
+      showTileContent(tile, currentTileContent)
 
-      if (this.successiveTilesClicked.length == MATCHING_TILES_SIZE) {
-        this.movesOutlet.increaseCount()
-        this.#previouslyClickedTileContentsMatchesTheCurrentTileContents(tileIndex) ?
-          this.#updateSolvedTilesCollection() :
+      if (
+        this.storeOutlet.successiveTilesClickedCount == MATCHING_TILES_SIZE
+      ) {
+        previousTile.matchingIndex === tileIndex ?
+          this.storeOutlet.addToSolvedTilesCollection(previousTile) :
           this.#resetSuccessiveClickedTilesContents()
+
+        this.movesOutlet.increaseCount()
+        this.storeOutlet.resetSuccessiveTilesCollection()
       }
 
-      this.#updatePreviouslyClickedTileIndexes(tileIndex, tileContent['indexes'])
+      this.storeOutlet.updatePreviouslyClickedTile(
+        tileIndex,
+        currentTileContent['indexes']
+      )
 
       this.#showCompletionInformationIfBoardIsCompleted()
     }
@@ -58,37 +65,13 @@ export default class extends Controller {
   }
 
   #showCompletionInformationIfBoardIsCompleted() {
-    if (this.solvedTileIndexes.length == this.boardSizeValue) {
+    if (
+      this.storeOutlet.solvedTilesCollectionCount == this.boardSizeValue
+    ) {
       this.timerOutlet.stop()
       this.alertOutlet.boardCompleted()
+      this.storeOutlet.resetStore()
     }
-  }
-
-  #previouslyClickedTileIsTheCurrentTile(tileIndex) {
-    return (tileIndex == this.previouslyClickedTileIndexObject.mainIndex)
-  }
-
-  #previouslyClickedTileContentsMatchesTheCurrentTileContents(tileIndex) {
-    return (tileIndex == this.previouslyClickedTileIndexObject.matchingIndex)
-  }
-
-  #updateSolvedTilesCollection() {
-    this.solvedTileIndexes = [
-      ...this.solvedTileIndexes,
-      ...Object.values(this.previouslyClickedTileIndexObject)
-    ]
-    this.#resetSuccessiveTileArray()
-  }
-
-  #updatePreviouslyClickedTileIndexes(tileIndex, indexes) {
-    this.previouslyClickedTileIndexObject = {
-      mainIndex: tileIndex,
-      matchingIndex: (indexes.filter(i => i != tileIndex)[0])
-    }
-  }
-
-  #resetSuccessiveTileArray() {
-    this.successiveTilesClicked = []
   }
 
   #resetSuccessiveClickedTilesContents() {
@@ -96,7 +79,6 @@ export default class extends Controller {
       this.successiveTilesClicked.forEach(tile => {
         resetTileContent(tile)
       });
-      this.#resetSuccessiveTileArray()
     }, TIMEOUT_INTERVAL)
   }
 

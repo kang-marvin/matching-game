@@ -10,14 +10,17 @@ application.register("alert", AlertController)
 import BoardController from "./board_controller"
 application.register("board", BoardController)
 
+import FilterController from "./filter_controller"
+application.register("filter", FilterController)
+
 import MessageController from "./message_controller"
 application.register("message", MessageController)
 
 import MovesController from "./moves_controller"
 application.register("moves", MovesController)
 
-import FilterController from "./filter_controller"
-application.register("filter", FilterController)
+import StoreController from "./store_controller"
+application.register("store", StoreController)
 
 import TimerController from "./timer_controller"
 application.register("timer", TimerController)
