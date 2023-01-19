@@ -1,6 +1,6 @@
 import { Controller } from "@hotwired/stimulus"
 import { DefaultIcon, Icons } from "./data/icons"
-import { resetTileContent } from "./helper/tile"
+import { resetTileContent, showTileContent } from "./helper/tile"
 
 const DEFAULT_COLOR       = 'bg-black'
 const TIMEOUT_INTERVAL    = 1500
@@ -36,7 +36,7 @@ export default class extends Controller {
     if (this.previouslyClickedTileIsTheCurrentTile(tileIndex) == false || tileIsOpen == false) {
       const data = this.fetchDataForClickedTile(tileIndex)
 
-      this.showTileContents(tile, data)
+      showTileContent(tile, data)
       this.successiveTilesClicked.push(tile)
 
       if (this.successiveTilesClicked.length == MATCHING_TILES_SIZE) {
@@ -67,14 +67,6 @@ export default class extends Controller {
       label: result[1],
       indexes: this.finishedResultValue[tileKeyInBoard[0]]
     }
-  }
-
-  showTileContents(tile, data) {
-    tile.dataset.isOpen = 'true'
-    tile.src = Icons[data.label.toLowerCase()] || DefaultIcon
-    tile.style.backgroundColor = data.color
-    tile.alt = data.label.toUpperCase()
-    tile.classList.remove(DEFAULT_COLOR)
   }
 
   showCompletionTextWhenAllTilesHaveBeenSolved() {

@@ -1,6 +1,14 @@
-import { DefaultIcon } from "../data/icons"
+import { DefaultIcon, Icons } from "../data/icons"
 
 const DEFAULT_COLOR = 'bg-black'
+
+export const showTileContent = (tile, data) => {
+  tile.dataset.isOpen = 'true'
+  tile.src = Icons[data.label.toLowerCase()] || DefaultIcon
+  tile.style.backgroundColor = data.color
+  tile.alt = data.label.toUpperCase()
+  tile.classList.remove(DEFAULT_COLOR)
+}
 
 export const resetTileContent = (tile) => {
   tile.dataset.isOpen = 'false'
