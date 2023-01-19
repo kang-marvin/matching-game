@@ -35,7 +35,7 @@ export default class extends Controller {
         tileIsOpen == false
       ) {
 
-      this.successiveTilesClicked.push(tile)
+      this.storeOutlet.addToSuccessiveTilesCollection(tile)
       const currentTileContent =
         extractTileContentsFromFinishedResult(
           tileIndex,
@@ -46,12 +46,10 @@ export default class extends Controller {
       if (
         this.storeOutlet.successiveTilesClickedCount == MATCHING_TILES_SIZE
       ) {
-        previousTile.matchingIndex === tileIndex ?
-          this.storeOutlet.addToSolvedTilesCollection(previousTile) :
-          this.#resetSuccessiveClickedTilesContents()
-
         this.movesOutlet.increaseCount()
-        this.storeOutlet.resetSuccessiveTilesCollection()
+        previousTile.matchingIndex === tileIndex ?
+          this.#updateSolvedTilesCollection(previousTile) :
+          this.#resetSuccessiveClickedTilesContents()
       }
 
       this.storeOutlet.updatePreviouslyClickedTile(
@@ -64,21 +62,27 @@ export default class extends Controller {
 
   }
 
+  #updateSolvedTilesCollection(previousTile) {
+    this.storeOutlet.addToSolvedTilesCollection(previousTile)
+    this.storeOutlet.resetSuccessiveTilesCollection()
+  }
+
   #showCompletionInformationIfBoardIsCompleted() {
     if (
       this.storeOutlet.solvedTilesCollectionCount == this.boardSizeValue
     ) {
       this.timerOutlet.stop()
-      this.alertOutlet.boardCompleted()
       this.storeOutlet.resetStore()
+      this.alertOutlet.boardCompleted()
     }
   }
 
   #resetSuccessiveClickedTilesContents() {
     setTimeout(() => {
-      this.successiveTilesClicked.forEach(tile => {
+      this.storeOutlet.successiveTiles.forEach(tile => {
         resetTileContent(tile)
       });
+      this.storeOutlet.resetSuccessiveTilesCollection()
     }, TIMEOUT_INTERVAL)
   }
 

@@ -24,6 +24,10 @@ export default class extends Controller {
     ]
   }
 
+  addToSuccessiveTilesCollection(tile) {
+    this.successiveTilesClicked.push(tile)
+  }
+
   resetStore() {
     this.resetPreviousTile()
     this.resetSuccessiveTilesCollection()
@@ -44,6 +48,10 @@ export default class extends Controller {
 
   get tile(){
     return this.lastClickedTileObject
+  }
+
+  get successiveTiles() {
+    return this.successiveTilesClicked
   }
 
   get successiveTilesClickedCount() {
