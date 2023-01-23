@@ -30,4 +30,8 @@ The levels of difficulty are
     -> Use redirect to have root path with `/url_path`
     -> `private` functions inside Stimulus controllers
 
-##
+## Hosted
+
+The app can be found [here](https://matching-animal-color-game.fly.dev/en/game)
+
+It is hosted on [Fly.io](fly.io)
