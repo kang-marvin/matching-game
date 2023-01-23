@@ -14,18 +14,15 @@ class DashboardController < ApplicationController
   private
 
   def board_generator(board_size)
-    color_options = COLORS.shuffle
-    letter_options = LETTERS.shuffle
+    color_options = COLORS.shuffle.take(board_size / 2)
+    letter_options = LETTERS.shuffle.take(board_size)
     options = color_options.product(letter_options)
 
-    uniq_options =
-      options.shuffle.each_slice((board_size * board_size) / 2).to_a.sample
-
-    (uniq_options * 2).shuffle
+    (options * 2).shuffle
   end
 
   def dashboard_params
-    params.permit(:level)
+    params.permit(:level, :locale)
   end
 
 end
