@@ -1,3 +1,7 @@
+<%
+  externalLinkClassName = "text-blue-500 hover:text-blue-600 hover:underline hover:underline-offset-4"
+%>
+
 <%= render(GameDashboardComponent.new(background_image_src: nil)) do %>
   <!-- Game Header -->
   <%= render(UI::HeaderComponent.new()) %>
@@ -18,4 +22,13 @@
         )
       )
   %>
+
+  <!-- Codebase -->
+  <h3 class="leading-normal w-fit justify-self-center font-normal text-lg">
+    Read the codebase on
+    <a href="https://github.com/kang-marvin/matching-game"
+      class="<%= externalLinkClassName %>"
+      referrerpolicy="no referrer"
+    >Github</a>
+  </h3>
 <% end %>
