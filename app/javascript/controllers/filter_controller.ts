@@ -1,10 +1,17 @@
 import { Controller } from "@hotwired/stimulus"
 
+interface BoardInterface {
+  [key: string]: string
+}
 // Connects to data-controller="settings"
 export default class extends Controller {
+  currentURL: Location
 
   static targets = [ 'boardLevel' ]
+  declare boardLevelTarget: BoardInterface
+
   static values =  { defaultBoardLevel: String }
+  declare defaultBoardLevelValue: string
 
   initialize() {
     this.currentURL = window.location
@@ -23,11 +30,11 @@ export default class extends Controller {
     this.#setURLWithRefresh(this.searchParams)
   }
 
-  #setURLWithoutRefresh(params) {
-    window.history.replaceState(null, null, `?${params.toString()}`)
+  #setURLWithoutRefresh(params: URLSearchParams) {
+    window.history.replaceState(null, '', `?${params.toString()}`)
   }
 
-  #setURLWithRefresh(params) {
+  #setURLWithRefresh(params: URLSearchParams) {
     window.location.replace(`${this.currentURL.origin}?${params.toString()}`)
   }
 
@@ -39,7 +46,7 @@ export default class extends Controller {
     }
   }
 
-  get searchParams() {
+  get searchParams(): URLSearchParams {
     return new URLSearchParams(this.currentURL.search)
   }
 }

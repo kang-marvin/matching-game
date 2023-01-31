@@ -2,7 +2,11 @@
  * All images are from https://svgsilh.com
  */
 
-export const Icons = {
+interface IconInterface {
+  [key: string]: string
+}
+
+export const Icons: Readonly<IconInterface> = {
   "ant":    "https://svgsilh.com/svg/1295028.svg",
   "bird":   "https://svgsilh.com/svg/310517.svg",
   "cat":    "https://svgsilh.com/svg/151326.svg",
@@ -14,4 +18,4 @@ export const Icons = {
   "spider":     "https://svgsilh.com/svg/3357489.svg",
 };
 
-export const DefaultIcon = "https://upload.wikimedia.org/wikipedia/en/9/98/Blank_button.svg"
+export const DefaultIcon: Readonly<string> = "https://upload.wikimedia.org/wikipedia/en/9/98/Blank_button.svg"

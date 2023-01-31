@@ -2,14 +2,21 @@ import { Controller } from "@hotwired/stimulus"
 
 // Connects to data-controller="count"
 export default class extends Controller {
+  elapsedInterval: number
+
   static targets = [ "display" ]
+  declare displayTarget: HTMLDivElement
+  declare hasDisplayTarget: boolean
 
   static values = {
-    elapsedDuration: { type: Number, default: 0 }
+    elapsedDuration: {type: Number, default: 0 }
   }
 
+  declare elapsedDurationValue: number
+
+
   connect() {
-    this.elapsedInterval = null
+    this.elapsedInterval = 0
   }
 
   /** Public Methods */
@@ -31,14 +38,14 @@ export default class extends Controller {
   }
 
   /** Private Methods */
-  #calculateElapsedTime(duration) {
+  #calculateElapsedTime(duration: number): string {
     const minutes = this.#toPadStart(Math.floor((duration % 3600) / 60))
     const seconds = this.#toPadStart(Math.floor(duration % 60))
 
     return `${minutes}:${seconds}`
   }
 
-  #toPadStart(time) {
+  #toPadStart(time: number): string {
     return time.toString().padStart(2,'0')
   }
 }

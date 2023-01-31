@@ -1,30 +1,39 @@
 import { Controller } from "@hotwired/stimulus"
 
-const DEFAULT_TILE_INDEX_OBJECT =  { mainIndex: null, matchingIndex: null }
+interface TileInterface {
+  mainIndex: number | null;
+  matchingIndex: number | null;
+}
 
-// Connects to data-controller="store"
+const DEFAULT_TILE_INDEX_OBJECT: TileInterface =  { mainIndex: null, matchingIndex: null }
+
 export default class extends Controller {
+
+  solvedTilesCollection: Array<number>
+  successiveTilesClicked: Array<HTMLImageElement>
+  lastClickedTileObject: TileInterface
+
   connect() {
     this.solvedTilesCollection = []
     this.successiveTilesClicked = []
     this.lastClickedTileObject = DEFAULT_TILE_INDEX_OBJECT
   }
 
-  updatePreviouslyClickedTile(currentTileIndex, indexes) {
+  updatePreviouslyClickedTile(currentTileIndex: number, indexes: Array<number> ) {
     this.lastClickedTileObject = {
       mainIndex: currentTileIndex,
-      matchingIndex: (indexes.filter(i => i != currentTileIndex)[0])
+      matchingIndex: (indexes.filter((i: number) => i != currentTileIndex)[0])
     }
   }
 
-  addToSolvedTilesCollection(tile) {
+  addToSolvedTilesCollection(tile: TileInterface) {
     this.solvedTilesCollection = [
       ...this.solvedTilesCollection,
       ...Object.values(tile)
     ]
   }
 
-  addToSuccessiveTilesCollection(tile) {
+  addToSuccessiveTilesCollection(tile: HTMLImageElement) {
     this.successiveTilesClicked.push(tile)
   }
 
@@ -38,7 +47,7 @@ export default class extends Controller {
     this.lastClickedTileObject = DEFAULT_TILE_INDEX_OBJECT
   }
 
-  resetSuccessiveTilesCollection() {
+  resetSuccessiveTilesCollection(): void {
     this.successiveTilesClicked = []
   }
 
@@ -46,19 +55,19 @@ export default class extends Controller {
     this.solvedTilesCollection = []
   }
 
-  get tile(){
+  get tile(): TileInterface {
     return this.lastClickedTileObject
   }
 
-  get successiveTiles() {
+  get successiveTiles(): Array<HTMLImageElement> {
     return this.successiveTilesClicked
   }
 
-  get successiveTilesClickedCount() {
+  get successiveTilesClickedCount(): number {
     return this.successiveTilesClicked.length
   }
 
-  get solvedTilesCollectionCount() {
+  get solvedTilesCollectionCount(): number {
     return this.solvedTilesCollection.length
   }
 }

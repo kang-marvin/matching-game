@@ -5,26 +5,42 @@ import {
   showTileContent
 } from "./helper/tile"
 
-const TIMEOUT_INTERVAL    = 1500
-const MATCHING_TILES_SIZE = 2
+interface BoardInterface {
+  [key: string]: Array<number>
+}
+
+interface Tile {
+  mainIndex: number | null;
+  matchingIndex: number | null;
+}
+
+interface EventInterface {
+  target: HTMLImageElement
+  dataset: HTMLOrSVGElement
+}
+
+const TIMEOUT_INTERVAL: Readonly<number> = 1500
+const MATCHING_TILES_SIZE: Readonly<number> = 2
 
 export default class extends Controller {
-
   static values  = {
     finishedResult: {type: Object, default: {} },
     boardSize: Number,
   }
+  declare boardSizeValue: number
+  declare finishedResultValue: BoardInterface
 
   static outlets = [ "timer", "moves", "alert", "store" ]
+  declare timerOutlet: any
+  declare movesOutlet: any
+  declare alertOutlet: any
+  declare storeOutlet: any
 
   connect() {
-    this.solvedTileIndexes      = []
-    this.successiveTilesClicked = []
-
     this.timerOutlet.start()
   }
 
-  flipTile(event) {
+  flipTile(event: EventInterface) {
     const tile = event.target
     const tileIndex = Number(tile.dataset.tileIndex)
     const tileIsOpen = tile.dataset.isOpen == 'true'
@@ -62,7 +78,7 @@ export default class extends Controller {
 
   }
 
-  #updateSolvedTilesCollection(previousTile) {
+  #updateSolvedTilesCollection(previousTile: Tile) {
     this.storeOutlet.addToSolvedTilesCollection(previousTile)
     this.storeOutlet.resetSuccessiveTilesCollection()
   }
@@ -79,7 +95,7 @@ export default class extends Controller {
 
   #resetSuccessiveClickedTilesContents() {
     setTimeout(() => {
-      this.storeOutlet.successiveTiles.forEach(tile => {
+      this.storeOutlet.successiveTiles.forEach((tile: HTMLImageElement) => {
         resetTileContent(tile)
       });
       this.storeOutlet.resetSuccessiveTilesCollection()
